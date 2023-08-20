@@ -5,7 +5,7 @@ import axios from "axios";
 import { toast } from "sonner";
 import { useState } from "react";
 import { Loader2 } from "lucide-react";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -33,6 +33,7 @@ const formSchema = z.object({
 type FormType = z.infer<typeof formSchema>;
 
 export const RegisterForm = () => {
+  const { data: session } = useSession();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const form = useForm({
@@ -43,6 +44,10 @@ export const RegisterForm = () => {
       password: "",
     },
   });
+
+  if (session?.user) {
+    router.push("/");
+  }
 
   const onSubmit = async (values: FormType) => {
     try {
