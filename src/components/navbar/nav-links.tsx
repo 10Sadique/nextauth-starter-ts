@@ -4,6 +4,7 @@ import { Moon, Sun } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 
 import { Button, buttonVariants } from "@/components/ui/button";
+import { AvatarDropdown } from "./avatar-dropdown";
 
 export const NavLinks = () => {
   const { data: session } = useSession();
@@ -42,6 +43,8 @@ export const NavLinks = () => {
         <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
         <span className="sr-only">Toggle theme</span>
       </Button>
+
+      {session && <AvatarDropdown />}
     </div>
   );
 };
